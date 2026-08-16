@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Hub - Roblox Script Center</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="https://i.ibb.co/cRs8GBw/IMG-0806.jpg">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Kanit', sans-serif;
+        }
+
+        body {
+            background-color: #0b0f19;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 50px;
+        }
+
+        /* Navbar */
+        .navbar {
+            width: 100%;
+            max-width: 1100px;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+
+        .brand-icon {
+            width: 36px;
+            height: 36px;
+            background: #00aaff;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover { color: #ffffff; }
+
+        .nav-link.active {
+            background: #092b42;
+            color: #00a5ff;
+            border: 1px solid rgba(0, 165, 255, 0.4);
+            padding: 6px 16px;
+            border-radius: 8px;
+        }
+
+        .btn-discord-nav {
+            background: rgba(88, 101, 242, 0.2);
+            border: 1px solid rgba(88, 101, 242, 0.5);
+            color: #5865F2;
+            padding: 6px 14px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.85em;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: 0.3s;
+        }
+
+        .btn-discord-nav:hover {
+            background: #5865F2;
+            color: #fff;
+        }
+
+        /* Main Container */
+        .container {
+            margin-top: 20px;
+            text-align: center;
+            width: 100%;
+            max-width: 600px;
+            padding: 0 20px;
+        }
+
+        h1 {
+            font-size: 2em;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        /* .geg Domain Box */
+        .domain-box {
+            background: #060911;
+            border: 1px solid rgba(0, 165, 255, 0.4);
+            border-radius: 12px;
+            padding: 10px 15px;
+            margin-bottom: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            box-shadow: 0 0 15px rgba(0, 165, 255, 0.15);
+        }
+
+        .domain-input {
+            background: transparent;
+            border: none;
+            color: #00d2ff;
+            font-size: 1em;
+            font-weight: 600;
+            text-align: right;
+            outline: none;
+            width: 120px;
+        }
+
+        .domain-ext {
+            color: #10b981;
+            font-size: 1em;
+            font-weight: 600;
+        }
+
+        /* Info Bar */
+        .info-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 0.85em;
+        }
+
+        .status-badge {
+            background: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background-color: #10b981;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #10b981;
+        }
+
+        .copy-count { color: #94a3b8; }
+
+        /* Card & Controls */
+        .script-card {
+            background: #0f1524;
+            border: 1px solid rgba(0, 165, 255, 0.15);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .select-game {
+            width: 100%;
+            padding: 10px;
+            background: #060911;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            outline: none;
+            font-size: 0.9em;
+        }
+
+        .tab-group {
+            display: flex;
+            background: #060911;
+            border-radius: 10px;
+            padding: 4px;
+            margin-bottom: 20px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            background: transparent;
+            color: #64748b;
+            font-size: 0.9em;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(90deg, #0088ff, #00bfff);
+            color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0, 170, 255, 0.4);
+        }
+
+        .code-box {
+            background: #060911;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 15px;
+            color: #00d2ff;
+            font-family: monospace;
+            font-size: 0.75em;
+            word-break: break-all;
+            text-align: left;
+            margin-bottom: 20px;
+            min-height: 70px;
+        }
+
+        .btn-copy {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #0088ff, #00c3ff);
+            color: #ffffff;
+            font-size: 0.95em;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 136, 255, 0.3);
+            transition: opacity 0.3s;
+        }
+
+        .btn-copy:hover { opacity: 0.9; }
+
+        /* Preview Image Section */
+        .preview-section {
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        .preview-title {
+            font-size: 1em;
+            margin-bottom: 10px;
+            color: #94a3b8;
+        }
+
+        .preview-img {
+            width: 100%;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 165, 255, 0.2);
+            object-fit: cover;
+            /* เพิ่มการปรับภาพให้คมชัด */
+            image-rendering: -webkit-optimize-contrast;
+            filter: contrast(105%);
+        }
+
+        /* Toast Notification */
+        .toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #10b981;
+            color: #fff;
+            text-align: center;
+            border-radius: 8px;
+            padding: 12px 20px;
+            position: fixed;
+            z-index: 1000;
+            right: 20px;
+            bottom: 30px;
+            font-size: 0.9em;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+            opacity: 0;
+            transition: opacity 0.3s, bottom 0.3s;
+        }
+
+        .toast.show {
+            visibility: visible;
+            opacity: 1;
+            bottom: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="toast" class="toast">📋 คัดลอกสคริปต์เรียบร้อยแล้ว!</div>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="brand">
+            <div class="brand-icon">🚀</div>
+            Nexus Hub
+        </div>
+        <div class="nav-links">
+            <a href="#" class="nav-link active">รับสคริปต์</a>
+            <a href="https://discord.gg/uYWJW2yuan" target="_blank" class="btn-discord-nav">
+                Discord
+            </a>
+        </div>
+    </div>
+
+    <!-- Container -->
+    <div class="container">
+        <h1>คัดลอกของเราสคริปต์</h1>
+
+        <!-- .geg Domain Display -->
+        <div class="domain-box">
+            <span>🔗</span>
+            <input type="text" id="gegName" class="domain-input" value="nexushub" oninput="updateGegScript()">
+            <span class="domain-ext">.geg</span>
+        </div>
+
+        <!-- Info Bar -->
+        <div class="info-bar">
+            <div class="status-badge">
+                <span class="dot"></span> Status: Working
+            </div>
+            <div class="copy-count">
+                📋 คัดลอกไปแล้ว: <span id="copyCounter">3,420</span> ครั้ง
+            </div>
+        </div>
+
+        <!-- Script Card -->
+        <div class="script-card">
+            <!-- เลือกเกม -->
+            <select class="select-game" id="gameSelect" onchange="updateScript()">
+                <option value="bloxfruit">🎮 Blox Fruits</option>
+                <option value="kinglegacy">👑 King Legacy</option>
+                <option value="bladeball">⚔️ Blade Ball</option>
+            </select>
+
+            <!-- แท็บ Normal / Farm -->
+            <div class="tab-group">
+                <button id="tabNormal" class="tab-btn active" onclick="switchTab('normal')">ปกติ</button>
+                <button id="tabFarm" class="tab-btn" onclick="switchTab('farm')">ฟาร์ม</button>
+            </div>
+
+            <div class="code-box" id="codeBox"></div>
+
+            <button class="btn-copy" onclick="copyCode()">บทคัดลอก</button>
+        </div>
+
+        <!-- Preview -->
+        <div class="preview-section">
+            <div class="preview-title">🖼️ ภาพตัวอย่างสคริปต์ (Preview)</div>
+            <img src="https://i.ibb.co/cRs8GBw/IMG-0806.jpg" alt="Script Preview" class="preview-img">
+        </div>
+    </div>
+
+    <script>
+        const scripts = {
+            bloxfruit: {
+                normal: 'loadstring(game:HttpGet("https://gist.githubusercontent.com/nexus344/5fd7ced71d3d46d98d74eb0eadf433cd/raw/369b2f1d8715098690730f71166626855eb45bb9/gistfile1.txt"))()',
+                farm: '-- Blox Fruits Auto Farm\nloadstring(game:HttpGet("https://gist.githubusercontent.com/nexus344/5fd7ced71d3d46d98d74eb0eadf433cd/raw/369b2f1d8715098690730f71166626855eb45bb9/gistfile1.txt"))()'
+            },
+            kinglegacy: {
+                normal: '-- King Legacy Normal\nloadstring(game:HttpGet("https://raw.githubusercontent.com/nexus344/kinglegacy/main/script.lua"))()',
+                farm: '-- King Legacy Farm\nloadstring(game:HttpGet("https://raw.githubusercontent.com/nexus344/kinglegacy/main/farm.lua"))()'
+            },
+            bladeball: {
+                normal: '-- Blade Ball Auto Parry\nloadstring(game:HttpGet("https://raw.githubusercontent.com/nexus344/bladeball/main/script.lua"))()',
+                farm: '-- Blade Ball Farm\nloadstring(game:HttpGet("https://raw.githubusercontent.com/nexus344/bladeball/main/farm.lua"))()'
+            }
+        };
+
+        let currentTab = 'normal';
+        let count = 3420;
+
+        function updateScript() {
+            const game = document.getElementById('gameSelect').value;
+            const codeBox = document.getElementById('codeBox');
+            codeBox.innerText = scripts[game][currentTab];
+        }
+
+        function switchTab(type) {
+            currentTab = type;
+            document.getElementById('tabNormal').classList.toggle('active', type === 'normal');
+            document.getElementById('tabFarm').classList.toggle('active', type === 'farm');
+            updateScript();
+        }
+
+        function updateGegScript() {
+            const name = document.getElementById('gegName').value.toLowerCase().replace(/[^a-z0-9]/g, '') || 'nexushub';
+            document.getElementById('codeBox').innerText = `loadstring(game:HttpGet("https://raw.githubusercontent.com/nexus344/geg/main/${name}.lua"))()`;
+        }
+
+        function copyCode() {
+            const codeText = document.getElementById('codeBox').innerText;
+            navigator.clipboard.writeText(codeText);
+            
+            count++;
+            document.getElementById('copyCounter').innerText = count.toLocaleString();
+
+            const toast = document.getElementById("toast");
+            toast.className = "toast show";
+            setTimeout(function(){ 
+                toast.className = toast.className.replace("show", ""); 
+            }, 2500);
+        }
+
+        // โหลดค่าเริ่มต้น
+        updateScript();
+    </script>
+</body>
+</html>
